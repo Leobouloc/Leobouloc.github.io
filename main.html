@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>JavaScript - read JSON from URL</title>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat%3A400%2C700%7CBitter%3A400%2C700" rel="stylesheet" type="text/css"/>
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+		body {
+			font-family: 'Gloria Hallelujah', cursive;
+			text-align:center;
+			background-color: #e3f8ff;
+			color: black;
+		}
+		
+		h1 {
+			font-size: 2vh;
+		}
+		
+		.title {
+			font-size: 5vh;
+			background-color: black;
+			color: #e3f8ff;
+		}
+		
+		.supercontainer{
+		  height:500px;
+		  display: flex;
+		  justify-content: center;
+		  align-items: center;
+		}
+		
+		/* Tooltip container */
+		.tooltip {
+		  position: relative;
+		  display: inline-block;
+		  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+		}
+
+		/* Tooltip text */
+		.tooltip .tooltiptext {
+		  font-size: 2vh;
+		  width: 300px;
+		  top: 100%;
+		  left: 20%;
+		
+		  visibility: hidden;
+		  background-color: black;
+		  color: #fff;
+		  text-align: center;
+		  padding: 5px 0;
+		  border-radius: 6px;
+		 
+		  /* Position the tooltip text - see examples below! */
+		  position: absolute;
+		  z-index: 1;
+		}
+
+		.tooltip .tooltiptext::after {
+		  content: " ";
+		  position: absolute;
+		  bottom: 100%;  /* At the top of the tooltip */
+		  left: 50%;
+		  margin-left: -5px;
+		  border-width: 5px;
+		  border-style: solid;
+		  border-color: transparent transparent black transparent;
+		}
+		
+		/* Show the tooltip text when you mouse over the tooltip container */
+		.tooltip:hover .tooltiptext {
+		  visibility: visible;
+		}
+
+	</style>
+	
+	</head>
+
+<body>
+
+ 
+<div>
+	<h1 class="title">A quand l'immunité vaccinale en France ?</h1>
+</div>
+<div class="supercontainer">
+	<div class="container" style="display:none;" id="container">
+		<h2 class="child"> <span class="tooltip"> à ce rythme on se retrouve au bar le: <span class="tooltiptext">Sur la base du nombre de personnes vaccinées durant les 7 derniers jours. L'immunité est considérée atteinte 1 mois après que 40% des Français seront vaccinés.</span></span></h2>
+		<h1 class="child" style="font-size:6vw; " id="date"></h1>
+		<h2 class="child" >allez, plus que <span id="num_days"></span> jours...</h2>
+	</div>
+</div>
+    <script>
+	
+		pop = 65000000
+		ratio = 0.65
+		num_extra_days = 30
+		
+	
+		var num_days
+		var num_vacc
+		var num_vacc_7_days
+		var deconf_date = new Date();
+		const options = { year: 'numeric', month: 'long', day: 'numeric' };
+
+		
+		url = 'https://www.data.gouv.fr/fr/datasets/r/b39196f2-97c4-42f4-8dee-5eb07e823377';
+		fetch(url)
+		  .then(response => response.json())
+		  .then(data => {
+			console.log(data)
+			var i
+			// Num vaccins over 7 days
+			num_vacc_7_days = data[data.length - 1]['total_vaccines'] - data[data.length - 8]['total_vaccines']
+			// Total vaccins
+			num_vacc = data[data.length - 1]['total_vaccines']
+			
+			num_days = ( pop*ratio - num_vacc ) / (num_vacc_7_days/7)
+			
+			
+			deconf_date.setDate(deconf_date.getDate() + num_days + num_extra_days); 			
+			document.getElementById("date").textContent = deconf_date.toLocaleDateString('fr-FR', options).toUpperCase();
+document.getElementById("num_days").textContent = Math.round(num_days + num_extra_days);
+document.getElementById("container").style.display = "block"
+		  });
+    </script>
+
+    
+</body>
+</html>
