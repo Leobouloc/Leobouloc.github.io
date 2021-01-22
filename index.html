@@ -148,8 +148,11 @@
 	</div>
 
 	<div class="footer">
+      
+	  mise à jour quotidienne |
 	  <span id="modalBtn2" class="modalBtn"> méthode</span> |
 	  <a target="_blank" href="https://www.youtube.com/watch?v=rvRFRaUJ6qY">un clip de rap</a> | yolo@aquandlimmunitevaccinale.fr
+	  <!--données du <span id="last_date"></span>-->
 	</div>
 	
 	
@@ -201,6 +204,9 @@
 		var deconf_date = new Date();
 		const options = { year: 'numeric', month: 'long', day: 'numeric' };
 
+		function date_to_date_fr(date) {
+			return date.slice(8, 10) + '/' + date.slice(5,7) + '/' + date.slice(0, 4)
+		}
 		
 		url = 'https://www.data.gouv.fr/fr/datasets/r/b39196f2-97c4-42f4-8dee-5eb07e823377';
 		fetch(url)
@@ -220,6 +226,7 @@
 			document.getElementById("date").textContent = deconf_date.toLocaleDateString('fr-FR', options).toUpperCase();
 			document.getElementById("num_days").textContent = Math.round(num_days + num_extra_days);
 			document.getElementById("avg_vacc_7").textContent = Math.round(num_vacc_7_days / 7)
+			/*document.getElementById("last_date").textContent = date_to_date_fr(data[data.length - 1]["date"])*/
 			document.getElementById("container").style.display = "block"
 		  });
     </script>    
