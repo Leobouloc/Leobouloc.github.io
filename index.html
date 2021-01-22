@@ -131,14 +131,18 @@
 
 	  <!-- Modal content -->
 	  <div class="modal-content">
-		<span class="close">&times;</span>		
+		<span class="close">&times;</span>
 		<p>
-			Le nombre de vaccinations par jour est une moyenne sur les 7 derniers jours (<span id="avg_vacc_7"></span> par jour). Les données proviennent du site <a target="_blank" href="https://www.data.gouv.fr/en/datasets/donnees-relatives-aux-personnes-vaccinees-contre-la-covid-19/">data.gouv.fr</a>.
+			La date est obtenue en calculant au temps qu'il faudrait pour vacciner 70% (<a target="_blank" href="https://www.pasteur.fr/fr/espace-presse/documents-presse/qu-est-ce-que-immunite-collective">source</a>) des 67 millions de français et en ajoutant 28 jours, le temps nécessaire pour que le vaccin fasse effet (<a target="_blank" href="https://sante.journaldesfemmes.fr/fiches-maladies/2620433-vaccin-coronavirus-covid-19-action-europe-pfizer-moderna-commande-delai-dose-differences-fiabilite/">source</a>).
 		</p>
-		
+		  
 		<p>
-			Cette date est obtenue en calculant au temps qu'il faudrait pour vacciner 70% (<a target="_blank" href="https://www.pasteur.fr/fr/espace-presse/documents-presse/qu-est-ce-que-immunite-collective">source</a>) des 67 millions de français et en ajoutant 28 jours, le temps nécessaire pour que le vaccin fasse effet (<a target="_blank" href="https://sante.journaldesfemmes.fr/fiches-maladies/2620433-vaccin-coronavirus-covid-19-action-europe-pfizer-moderna-commande-delai-dose-differences-fiabilite/">source</a>).
+			Le temps est estimé à partir du nombre moyen de vaccinations sur les 7 derniers jours (<span id="avg_vacc_7"></span> par jour). Les données proviennent du site <a target="_blank" href="https://www.data.gouv.fr/en/datasets/donnees-relatives-aux-personnes-vaccinees-contre-la-covid-19/">data.gouv.fr</a>.
 		</p>
+		<p>
+			Ce calcul ne tient pas compte de l'immunité acquise naturellement par les personnes ayant rencontré le virus. La durée avant l'immunité collective est donc potentiellement un peu plus courte.
+		</p>
+		  
 	  </div>
 
 	</div>
