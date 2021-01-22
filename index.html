@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>A quand l'immunité vaccinale en france</title>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat%3A400%2C700%7CBitter%3A400%2C700" rel="stylesheet" type="text/css"/>
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+		body {
+			font-family: 'Gloria Hallelujah', cursive;
+			text-align:center;
+			background-color: #e3f8ff;
+			color: black;
+		}
+		
+		h1 {
+			font-size: 2vh;
+		}
+		
+		.title {
+			font-size: 4.5vh;
+			background-color: black;
+			color: #e3f8ff;
+			padding-left: 13px;
+			padding-right: 13px;
+		}
+		
+
+		
+		.supercontainer{
+		  display: flex;
+		  justify-content: center;
+		  align-items: center;
+		}
+		
+		@media only screen and (min-width: 768px) {
+			.supercontainer{
+				height:500px;
+			}
+		}
+		
+		
+		.footer {
+		  position: fixed;
+		  left: 0;
+		  bottom: 0;
+		  width: 100%;
+		  color: grey;
+		  text-align: center;
+		}
+		
+		.footer a {
+			color: grey
+		}
+		
+		
+		/* The Modal (background) */
+		.modalBtn {
+		  cursor: pointer;
+		  text-decoration: underline;
+		}
+		
+		.modal {
+		  font-family: arial;
+		  font-size: 4vh;
+		  display: none; /* Hidden by default */
+		  position: fixed; /* Stay in place */
+		  z-index: 1; /* Sit on top */
+		  padding-top: 20px; /* Location of the box */
+		  left: 0;
+		  top: 0;
+		  width: 100%; /* Full width */
+		  height: 100%; /* Full height */
+		  overflow: auto; /* Enable scroll if needed */
+		  background-color: rgb(0,0,0); /* Fallback color */
+		  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+		}
+		
+		@media only screen and (min-width: 768px) {
+			.modal{
+				padding-top: 100px;
+			}
+		}
+		
+		
+
+		/* Modal Content */
+		.modal-content {
+		  background-color: #fefefe;
+		  margin: auto;
+		  padding: 20px;
+		  border: 1px solid #888;
+		  width: 68%;
+		}
+
+		/* The Close Button */
+		.close {
+		  color: #aaaaaa;
+		  float: right;
+		  font-size: 28px;
+		  font-weight: bold;
+		}
+
+		.close:hover,
+		.close:focus {
+		  color: #000;
+		  text-decoration: none;
+		  cursor: pointer;
+		}
+
+	</style>
+	
+	</head>
+
+<body>
+
+	<!-- Pardon me for the ugly code -->
+	 
+	<div>
+		<h1 class="title"><span >A quand l'immunité vaccinale en France ?</title></h1>
+	</div>
+	<div class="supercontainer">
+		<div class="container" style="display:none;" id="container">
+			<h2 class="child"> <span id="modalBtn1" class="modalBtn">à ce rythme</span> on se retrouve au bar le: </h2>
+			<h1 class="child" style="font-size:6vmax; " id="date"></h1>
+			<h2 class="child" >allez, plus que <span id="num_days"></span> jours...</h2>
+		</div>
+	</div>
+	
+	<!-- The Modal -->
+	<div id="modal" class="modal">
+
+	  <!-- Modal content -->
+	  <div class="modal-content">
+		<span class="close">&times;</span>		
+		<p>
+			Le nombre de vaccinations par jour est une moyenne sur les 7 derniers jours (<span id="avg_vacc_7"></span> par jour). Les données proviennent du site <a target="_blank" href="https://www.data.gouv.fr/en/datasets/donnees-relatives-aux-personnes-vaccinees-contre-la-covid-19/">data.gouv.fr</a>.
+		</p>
+		
+		<p>
+			Cette date est obtenue en calculant au temps qu'il faudrait pour vacciner 70% (<a target="_blank" href="https://www.pasteur.fr/fr/espace-presse/documents-presse/qu-est-ce-que-immunite-collective">source</a>) des 67 millions de français et en ajoutant 28 jours, le temps nécessaire pour que le vaccin fasse effet (<a target="_blank" href="https://sante.journaldesfemmes.fr/fiches-maladies/2620433-vaccin-coronavirus-covid-19-action-europe-pfizer-moderna-commande-delai-dose-differences-fiabilite/">source</a>).
+		</p>
+	  </div>
+
+	</div>
+
+	<div class="footer">
+	  <a target="_blank" href="https://www.data.gouv.fr/en/datasets/donnees-relatives-aux-personnes-vaccinees-contre-la-covid-19/">données</a> |
+	  <span id="modalBtn2" class="modalBtn"> methode</span> |
+	  <a target="_blank" href="https://www.youtube.com/watch?v=rvRFRaUJ6qY">un clip de rap</a>
+	
+	</div>
+	
+	
+	<script>
+		// Get the modal
+		var modal = document.getElementById("modal");
+
+		// Get the button that opens the modal
+		var btn1 = document.getElementById("modalBtn1");
+		
+		// Get the button that opens the modal
+		var btn2 = document.getElementById("modalBtn2");
+
+		// Get the <span> element that closes the modal
+		var span = document.getElementsByClassName("close")[0];
+
+		// When the user clicks the button, open the modal 
+		btn1.onclick = function() {
+		  modal.style.display = "block";
+		}
+		
+		// When the user clicks the button, open the modal 
+		btn2.onclick = function() {
+		  modal.style.display = "block";
+		}
+
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function() {
+		  modal.style.display = "none";
+		}
+
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+		  if (event.target == modal) {
+			modal.style.display = "none";
+		  }
+		}
+	</script>
+	
+    <script>
+		pop = 67060000 // https://www.google.com/search?sxsrf=ALeKk015ZVx6subL4uT2-U2GCs_D-6cA3A%3A1611270410894&ei=CgkKYLCLNoK-aLy8rpgB&q=population+france&oq=population+france&gs_lcp=CgZwc3ktYWIQAzIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywE6BAgAEEdQjQpYjQpg3QtoAHADeACAAWqIAWqSAQMwLjGYAQCgAQGqAQdnd3Mtd2l6yAEIwAEB&sclient=psy-ab&ved=0ahUKEwiwuOmDkq7uAhUCHxoKHTyeCxMQ4dUDCA0&uact=5
+		ratio_immunity = 0.7 // https://www.pasteur.fr/fr/espace-presse/documents-presse/qu-est-ce-que-immunite-collective
+		num_extra_days = 28 // https://sante.journaldesfemmes.fr/fiches-maladies/2620433-vaccin-coronavirus-covid-19-action-europe-pfizer-moderna-commande-delai-dose-differences-fiabilite/
+		
+	
+		var num_days
+		var num_vacc
+		var num_vacc_7_days
+		var deconf_date = new Date();
+		const options = { year: 'numeric', month: 'long', day: 'numeric' };
+
+		
+		url = 'https://www.data.gouv.fr/fr/datasets/r/b39196f2-97c4-42f4-8dee-5eb07e823377';
+		fetch(url)
+		  .then(response => response.json())
+		  .then(data => {
+			console.log(data)
+			var i
+			// Num vaccins over 7 days
+			num_vacc_7_days = data[data.length - 1]['total_vaccines'] - data[data.length - 8]['total_vaccines']
+			// Total vaccins
+			num_vacc = data[data.length - 1]['total_vaccines']
+			
+			num_days = ( pop*ratio_immunity - num_vacc ) / (num_vacc_7_days/7)
+			
+			
+			deconf_date.setDate(deconf_date.getDate() + num_days + num_extra_days); 			
+			document.getElementById("date").textContent = deconf_date.toLocaleDateString('fr-FR', options).toUpperCase();
+			document.getElementById("num_days").textContent = Math.round(num_days + num_extra_days);
+			document.getElementById("avg_vacc_7").textContent = Math.round(num_vacc_7_days / 7)
+			document.getElementById("container").style.display = "block"
+		  });
+    </script>    
+</body>
+</html>
