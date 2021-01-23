@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+	<!-- Twitter Card data
+	<meta name="twitter:card" value="summary"> -->
+
+	<!-- Open Graph data -->
+	<meta property="og:title" content="bon, quand est-ce qu'on se retrouve au bar ?" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://www.aquandlimmunitevaccinale.fr/" />
+	<!--<meta property="og:image" content="http://example.com/image.jpg" />-->
+	<meta property="og:description" content="A ce rythme de vaccination, à quelle date serons nous immunisés et pourrons nous retourner au bar?" />
+
+
 	<title>A quand l'immunité vaccinale en France</title>
 	<link href="https://fonts.googleapis.com/css?family=Montserrat%3A400%2C700%7CBitter%3A400%2C700" rel="stylesheet" type="text/css"/>
 	<link rel="preconnect" href="https://fonts.gstatic.com">
@@ -229,6 +241,7 @@
 			document.getElementById("avg_vacc_7").textContent = Math.round(num_vacc_7_days / 7)
 			/*document.getElementById("last_date").textContent = date_to_date_fr(data[data.length - 1]["date"])*/
 			document.getElementById("container").style.display = "block"
+			/* document.querySelector('meta[property="og:title"]').setAttribute("content", "yolo"); */
 		  });
     </script>    
 </body>
