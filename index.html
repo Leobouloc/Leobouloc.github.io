@@ -135,9 +135,9 @@
 		<h1 class="title"><span >A quand l'immunité vaccinale en France ?</title></h1>
 	</div>
 	<div class="supercontainer">
-		<div class="container" style="display:none;" id="container">
+		<div class="container" style="display:noneX;" id="container">
 			<h2 class="child"> <span id="modalBtn1" class="modalBtn">à ce rythme</span> on se retrouve au bar le: </h2>
-			<h1 class="child" style="font-size:6vmax; " id="date"></h1>
+			<h1 class="child" style="font-size:6vmax; " id="dateX">Le site revient bientôt :)</h1>
 			<h2 class="child" >allez, plus que <span id="num_days"></span> jours...</h2>
 		</div>
 	</div>
@@ -241,6 +241,7 @@
 				num_vacc = Number(data[data.length - 1][3])
 				num_vacc_minus_7 = Number(data[data.length - 8][3])
 				
+				debugger;
 				var i
 				// Num vaccins over 7 days
 				num_vacc_7_days = num_vacc - num_vacc_minus_7
