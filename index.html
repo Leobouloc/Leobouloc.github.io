@@ -17,9 +17,6 @@
 	<link href="https://fonts.googleapis.com/css?family=Montserrat%3A400%2C700%7CBitter%3A400%2C700" rel="stylesheet" type="text/css"/>
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
-	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js" integrity="sha512-rKFvwjvE4liWPlFnvH4ZhRDfNZ9FOpdkD/BU5gAIA3VS3vOQrQ5BjKgbO3kxebKhHdHcNUHLqxQYSoxee9UwgA==" crossorigin="anonymous"></script>
-	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<style>
 		body {
@@ -135,9 +132,9 @@
 		<h1 class="title"><span >A quand l'immunité vaccinale en France ?</title></h1>
 	</div>
 	<div class="supercontainer">
-		<div class="container" style="display:noneX;" id="container">
+		<div class="container" style="display:none;" id="container">
 			<h2 class="child"> <span id="modalBtn1" class="modalBtn">à ce rythme</span> on se retrouve au bar le: </h2>
-			<h1 class="child" style="font-size:6vmax; " id="dateX">Le site revient bientôt :)</h1>
+			<h1 class="child" style="font-size:6vmax; " id="date"></h1>
 			<h2 class="child" >allez, plus que <span id="num_days"></span> jours...</h2>
 		</div>
 	</div>
@@ -153,7 +150,7 @@
 		</p>
 		  
 		<p>
-			Le temps est estimé à partir du nombre moyen de vaccinations sur les 7 derniers jours (<span id="avg_vacc_7"></span> par jour). Les données proviennent du site <a target="_blank" href="https://www.data.gouv.fr/fr/datasets/donnees-relatives-aux-personnes-vaccinees-contre-la-covid-19-1/">data.gouv.fr</a>.
+			Le temps est estimé à partir du nombre moyen de vaccinations sur les 7 derniers jours (<span id="avg_vacc_7"></span> par jour). Les données proviennent du site <a target="_blank" href="https://www.data.gouv.fr/en/datasets/donnees-relatives-aux-personnes-vaccinees-contre-la-covid-19/">data.gouv.fr</a>.
 		</p>
 		<p>
 			Ce calcul ne tient pas compte de l'immunité acquise naturellement par les personnes ayant déjà été contaminées. La durée avant l'immunité collective est donc potentiellement un peu plus courte.
@@ -227,39 +224,28 @@
 			return date.slice(8, 10) + '/' + date.slice(5,7) + '/' + date.slice(0, 4)
 		}
 		
-		url = 'https://www.data.gouv.fr/fr/datasets/r/efe23314-67c4-45d3-89a2-3faef82fae90';
+		url = 'https://www.data.gouv.fr/fr/datasets/r/b39196f2-97c4-42f4-8dee-5eb07e823377';
 		fetch(url)
-			.then(response => response.text())
-			.then(csv => Papa.parse(csv)['data'])
-			.then(data => {
-				if (data[data.length-1][0] == "") {
-					data = data.slice(0, data.length - 1)
-				}
-				console.log(data)
-				
-				/* Corresponds to number of first doses */
-				num_vacc = Number(data[data.length - 1][3])
-				num_vacc_minus_7 = Number(data[data.length - 8][3])
-				
-				debugger;
-				var i
-				// Num vaccins over 7 days
-				num_vacc_7_days = num_vacc - num_vacc_minus_7
-				
-				num_days = ( pop*ratio_immunity - num_vacc ) / (num_vacc_7_days/7)
-				
-				console.log(num_vacc)
-				console.log(num_vacc_minus_7)
-				
-				deconf_date.setDate(deconf_date.getDate() + num_days + num_extra_days); 
-				
-				document.getElementById("date").textContent = deconf_date.toLocaleDateString('fr-FR', options).toUpperCase();
-				document.getElementById("num_days").textContent = Math.round(num_days + num_extra_days);
-				document.getElementById("avg_vacc_7").textContent = Math.round(num_vacc_7_days / 7)
-				/*document.getElementById("last_date").textContent = date_to_date_fr(data[data.length - 1]["date"])*/
-				document.getElementById("container").style.display = "block"
-				/* document.querySelector('meta[property="og:title"]').setAttribute("content", "yolo"); */
-			});
+		  .then(response => response.json())
+		  .then(data => {
+			console.log(data)
+			var i
+			// Num vaccins over 7 days
+			num_vacc_7_days = data[data.length - 1]['total_vaccines'] - data[data.length - 8]['total_vaccines']
+			// Total vaccins
+			num_vacc = data[data.length - 1]['total_vaccines']
+			
+			num_days = ( pop*ratio_immunity - num_vacc ) / (num_vacc_7_days/7)
+			
+			
+			deconf_date.setDate(deconf_date.getDate() + num_days + num_extra_days); 			
+			document.getElementById("date").textContent = deconf_date.toLocaleDateString('fr-FR', options).toUpperCase();
+			document.getElementById("num_days").textContent = Math.round(num_days + num_extra_days);
+			document.getElementById("avg_vacc_7").textContent = Math.round(num_vacc_7_days / 7)
+			/*document.getElementById("last_date").textContent = date_to_date_fr(data[data.length - 1]["date"])*/
+			document.getElementById("container").style.display = "block"
+			/* document.querySelector('meta[property="og:title"]').setAttribute("content", "yolo"); */
+		  });
     </script>    
 </body>
 </html>
