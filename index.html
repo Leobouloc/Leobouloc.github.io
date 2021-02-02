@@ -153,8 +153,13 @@
 		</p>
 		  
 		<p>
-			Le temps est estimé à partir du nombre moyen de vaccinations sur les 7 derniers jours (<span id="avg_vacc_7"></span> par jour). Les données proviennent du site <a target="_blank" href="https://www.data.gouv.fr/fr/datasets/donnees-relatives-aux-personnes-vaccinees-contre-la-covid-19-1/">data.gouv.fr</a>.
+			Le temps est estimé à partir du nombre moyen de vaccinations sur les 7 derniers jours (<span id="avg_vacc_7"></span> par jour; <span id="num_vacc_last"></span> <span id="date_last"></span>). Les données proviennent du site <a target="_blank" href="https://www.data.gouv.fr/fr/datasets/donnees-relatives-aux-personnes-vaccinees-contre-la-covid-19-1/">data.gouv.fr</a>.
 		</p>
+		
+		<p>
+			Ce calcul ne tient pas compte du fait que certains vaccins requièrent deux piqures pour être complêtement efficaces. La durée avant l'immunité collective est donc potentiellement plus long.
+		</p>
+		
 		<p>
 			Ce calcul ne tient pas compte de l'immunité acquise naturellement par les personnes ayant déjà été contaminées. La durée avant l'immunité collective est donc potentiellement un peu plus courte.
 		</p>
@@ -222,6 +227,7 @@
 		var num_vacc_7_days
 		var deconf_date = new Date();
 		const options = { year: 'numeric', month: 'long', day: 'numeric' };
+		const options_last = { weekday: 'long'};
 
 		function date_to_date_fr(date) {
 			return date.slice(8, 10) + '/' + date.slice(5,7) + '/' + date.slice(0, 4)
@@ -236,12 +242,14 @@
 					data = data.slice(0, data.length - 1)
 				}
 				
-				data = data.slice(1).map(a=> Number(a[2]))
+				
 				console.log(data)
+				num_vacc_data = data.slice(1).map(a=> Number(a[2]))
 				
 				/* Corresponds to number of first doses */
-				num_vacc = data.reduce((a, b) => a+b, 0)
-				num_vacc_minus_7 = Number(data.slice(0, data.length - 7).reduce((a, b) => a+b, 0))
+				num_vacc = num_vacc_data.reduce((a, b) => a+b, 0)
+				num_vacc_last = num_vacc_data[num_vacc_data.length-1]
+				num_vacc_minus_7 = Number(num_vacc_data.slice(0, num_vacc_data.length - 7).reduce((a, b) => a+b, 0))
 				var i
 				// Num vaccins over 7 days
 				num_vacc_7_days = num_vacc - num_vacc_minus_7
@@ -251,11 +259,15 @@
 				console.log(num_vacc)
 				console.log(num_vacc_minus_7)
 				
-				deconf_date.setDate(deconf_date.getDate() + num_days + num_extra_days); 
+				deconf_date.setDate(deconf_date.getDate() + num_days + num_extra_days)
+				last_date = new Date(data[data.length-1][1])
+				console.log(data[data.length-1][1])
 				
-				document.getElementById("date").textContent = deconf_date.toLocaleDateString('fr-FR', options).toUpperCase();
+				document.getElementById("date").textContent = deconf_date.toLocaleDateString('fr-FR', options).toUpperCase()
 				document.getElementById("num_days").textContent = Math.round(num_days + num_extra_days);
 				document.getElementById("avg_vacc_7").textContent = Math.round(num_vacc_7_days / 7)
+				document.getElementById("num_vacc_last").textContent = Math.round(num_vacc_last)
+				document.getElementById("date_last").textContent = last_date.toLocaleDateString('fr-FR', options_last)
 				/*document.getElementById("last_date").textContent = date_to_date_fr(data[data.length - 1]["date"])*/
 				document.getElementById("container").style.display = "block"
 				/* document.querySelector('meta[property="og:title"]').setAttribute("content", "yolo"); */
